@@ -20,6 +20,9 @@ const pizzas = [
 
 localStorage.clear();
 
+const div = document.getElementById("carro");
+div.className = "carro";
+
 const productos = document.getElementById("productos");
 
 pizzas.forEach( (pizza) => {
@@ -38,6 +41,7 @@ pizzas.forEach( (pizza) => {
             }
             carrito.push(pizza);
             localStorage.setItem("carrito", JSON.stringify(carrito));
+            mostrarCarrito();
         }   
     );
 
@@ -48,6 +52,22 @@ pizzas.forEach( (pizza) => {
     div.className = "contenedor";
 });
 
+function mostrarCarrito () {
+    const ul = document.getElementById("carritoDeProductos");
+    ul.innerHTML = "";
+    const carritoJson = localStorage.getItem("carrito");
+    const carrito = JSON.parse(carritoJson);
+    carrito.forEach( (pizza) => {
+        const li = document.createElement("li");
+        const pNombre = document.createElement("p");
+        pNombre.innerHTML = `Gusto: ${pizza.nombre}`;
+        const pPrecio = document.createElement("p");
+        pPrecio.innerHTML = `Precio: $${pizza.precio}`;
+        li.append(pNombre, pPrecio);
+        ul.append(li);
+    })
+}
 
+mostrarCarrito();
 
 
